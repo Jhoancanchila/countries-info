@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { characterRepositoryImp } from "../../infrastructure/repositories/CharacterRepositoryImp";
 import { getCharacter } from "../../domain/useCases/getCharacter";
 import { useCharacterStore } from "../../infrastructure/stores/CharacterStore";
@@ -12,18 +12,26 @@ export const useCharactersDragonBallZ = ( { page }: Props ) => {
   const characterRepository = characterRepositoryImp();
   const { setCharacters, characters } = useCharacterStore();
 
-  return useQuery({
-    queryKey: ["characters"],
-    queryFn: async () => {
-      const charactersList = await getCharacter(characterRepository,page);
+  return useInfiniteQuery({
+    queryKey: ["characters", "infiniteScroll"],
+    queryFn: async ( { pageParam, /* queryKey */ } ) => {
+      
+      const charactersList = await getCharacter(characterRepository, pageParam);
       const newCharacters = {
-        items: page === 1 ? charactersList.items : [...characters.items, ...charactersList.items],
+        items: [...characters.items, ...charactersList.items],
         links: charactersList.links,
         meta: charactersList.meta
-    }
+      }
       setCharacters(newCharacters);
       return newCharacters;
     },
-    staleTime: 1000 * 60 * 60,// 1 hora mantendrá la data en memoria
+    staleTime: 1000 * 60 * 60,// 1 hora mantendrá la data en memoria,
+    initialPageParam: page,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.meta.currentPage >= lastPage.meta.totalPages) {
+        return undefined;
+      }
+      return lastPage.meta.currentPage + 1
+    }
   })
 };

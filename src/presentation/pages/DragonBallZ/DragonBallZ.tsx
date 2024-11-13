@@ -4,13 +4,15 @@ import { useCharacterStore } from "../../../infrastructure/stores/CharacterStore
 import ContainerCard from "../../components/ContainerCard/ContainerCard"
 import { useCharactersDragonBallZ } from "../../hooks/useCharactersDragonBallZ";
 
-const DragonBallZ: React.FC = () => {
 
+const DragonBallZ: React.FC = () => {
+  
+  const page: number = 1;
   const [ hasMore, setHasMore ] = useState(true);
 
   const { characters } = useCharacterStore();
 
-  const { isLoading, error, refetch } = useCharactersDragonBallZ({ page:characters.meta.currentPage + 1 });
+  const { isLoading, error, fetchNextPage } = useCharactersDragonBallZ({ page });
   
 
   const getMoreCharacter = useCallback(() => {
@@ -18,8 +20,8 @@ const DragonBallZ: React.FC = () => {
       setHasMore(false);
       return;
     } 
-    refetch();
-  }, [characters, refetch]);
+    fetchNextPage();
+  }, [characters, fetchNextPage]);
 
   useEffect(() => {
     const handleScroll = () => {

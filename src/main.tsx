@@ -2,24 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import TanStackProvider from './plugins/TanStackProvider.tsx';
 
-
-// Create a client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false, // Deshabilita la re-intento de la petición
-    },
-  },
-})
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <TanStackProvider>
       <App />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    </TanStackProvider>
   </StrictMode>,
 )

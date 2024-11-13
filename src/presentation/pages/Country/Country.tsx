@@ -5,7 +5,7 @@ import { useCountries } from "../../hooks/useCountries";
 
 const Country: React.FC = () => {
 
-  const { isLoading, error } = useCountries();
+  const { /* isLoading, */ error } = useCountries();
 
   const { countryList } = useCountryStore();
 
