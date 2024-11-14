@@ -2,6 +2,7 @@ import {  lazy, Suspense } from "react";
 import CardLoader from "../CardLoader/CardLoader";
 import { CardEntity } from "../../../domain/models/CardEntity";
 import ModalDetails from "../ModalDetails/ModalDetails";
+import FloatingButtonScroll from "../FloatingButton/FloatingButtonScroll";
 
 const Card = lazy(() => import('../Card/Card'));
 
@@ -20,7 +21,8 @@ const ContainerCard: React.FC<Props> = ({ list }) => {
           </Suspense>
         ))
       }
-      <ModalDetails /> 
+      <ModalDetails />
+      <FloatingButtonScroll /> 
     </div>
   )
 }
