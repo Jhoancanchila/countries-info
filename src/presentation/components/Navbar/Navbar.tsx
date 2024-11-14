@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import MenuContext from "../../../infrastructure/context/menuContext/MenuContext";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage";
 
 import imgNavbar from "../../../assets/anime.webp";
@@ -8,6 +8,8 @@ import { ItemMenu } from "../../../domain/models/ItemsMenu";
 
 
 const Navbar: React.FC = () => {
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const itemContext = useContext(MenuContext);
 
@@ -21,6 +23,10 @@ const Navbar: React.FC = () => {
 
   const handleToggle = (item: ItemMenu) => {
     toggleItem(item);
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchParams({ query });
   };
 
   return (
@@ -39,7 +45,13 @@ const Navbar: React.FC = () => {
             )
             :
             (
-              <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+              <input 
+                type="text" 
+                placeholder="Search" 
+                className="input input-bordered w-24 md:w-auto" 
+                onChange={(e) => handleSearch(e.target.value)}
+                value={searchParams.get("query") || ""}
+              />
             )
           }
         </div>
