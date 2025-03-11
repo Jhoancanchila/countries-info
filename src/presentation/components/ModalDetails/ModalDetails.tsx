@@ -26,7 +26,7 @@ const ModalDetails: FC = () => {
 
   return (
     <>
-      <dialog ref={dialogRef} id="my_modal_4" className="modal">
+      <dialog ref={dialogRef} id="my_modal_4" className="modal" onClick={handleClose}>
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-xl my-4 sm:text-3xl">{ modalData.data.title}</h3>
           <figure>

@@ -1,6 +1,6 @@
-import { Character } from "../../domain/models/Character";
+import { Character, CharacterItems } from "../../domain/models/Character";
 import CharacterRepository from "../../domain/repositories/CharacterRepository";
-import { fetchCharacterList } from "../api/CharacterApi";
+import { fetchCharacterList, fetchCharactersFiltered } from "../api/CharacterApi";
 
 export const characterRepositoryImp = (): CharacterRepository => {
     return {
@@ -8,5 +8,9 @@ export const characterRepositoryImp = (): CharacterRepository => {
             const characters = await fetchCharacterList(page);
             return characters;
         },
+        getCharacterFiltered: async (query: string):Promise<CharacterItems[]> => {
+            const characters = await fetchCharactersFiltered(query);
+            return characters.filter((character) => character.name.toLowerCase().includes(query.toLowerCase()));
+        }
     };
 }

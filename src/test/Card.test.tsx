@@ -1,19 +1,49 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from '@testing-library/user-event';
 import Card  from "../../src/presentation/components/Card/Card";
+
+beforeAll(() => {
+  global.IntersectionObserver = class MockIntersectionObserver implements IntersectionObserver {
+    readonly root: Element | null = null;
+    readonly rootMargin: string = '';
+    readonly thresholds: ReadonlyArray<number> = [];
+
+    constructor(
+      public callback: IntersectionObserverCallback,
+      public options?: IntersectionObserverInit
+    ) {}
+
+    observe(target: Element): void {
+      // Simula que el elemento es visible
+      this.callback([{ isIntersecting: true, target, intersectionRatio: 1, boundingClientRect: {} as DOMRectReadOnly, intersectionRect: {} as DOMRectReadOnly, rootBounds: null, time: 0 }], this);
+    }
+
+    unobserve(target: Element): void {
+      // No hace nada en la simulación
+    }
+
+    disconnect(): void {
+      // No hace nada en la simulación
+    }
+
+    takeRecords(): IntersectionObserverEntry[] {
+      return [];
+    }
+  };
+});
 
 describe("Card", () => {
 
-  beforeEach(() => {
-    const country = {
-      id: "BRA",
-      name: "South Georgia",
-      capital: "Brasília",
-      region: "Americas",
-      population: 206135893,
-      flag: "https://restcountries.com/data/bra.svg"
-    }
+  const country = {
+    id: "BRA",
+    title: "South Georgia",
+    subTitle: "Brasília",
+    threeTitle: "Americas",
+    point: 206135893,
+    subPoint: 55555,
+    image: "https://restcountries.com/data/bra.svg"
+  }
 
+  beforeEach(() => {
     render(<Card character={country} />);
   });
 
@@ -23,15 +53,5 @@ describe("Card", () => {
     expect(screen.getByText("Americas")).toBeDefined();
     expect(screen.getByText("Brasília")).toBeDefined();
     expect(screen.getByText("206135893")).toBeDefined();
-    expect(screen.getByText("Detail")).toBeDefined();
-  });
-
-  test("clicking on the button should call the onClick function", async() => {
-
-    const button = screen.getByRole("button", { name: "Detail" });
-    await userEvent.click(button);
-    
-
-    button.click();
-  });
+    expect(screen.getByText("55555")).toBeDefined();});
 });

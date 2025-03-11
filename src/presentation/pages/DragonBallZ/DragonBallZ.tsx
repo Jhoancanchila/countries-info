@@ -3,16 +3,20 @@ import { createCharacterAdapter } from "../../../infrastructure/adapters/charact
 import { useCharacterStore } from "../../../infrastructure/stores/CharacterStore";
 import ContainerCard from "../../components/ContainerCard/ContainerCard"
 import { useCharactersDragonBallZ } from "../../hooks/useCharactersDragonBallZ";
+import { pageInitial } from "../../../domain/models/General";
+import { useQuerySearch } from "../../hooks/useQuerySearch";
 
 
 const DragonBallZ: React.FC = () => {
+
+  const query = useQuerySearch();
   
-  const page: number = 1;
+  const page = pageInitial;
   const [ hasMore, setHasMore ] = useState(true);
 
-  const { characters } = useCharacterStore();
+  const { characters, filteredCharacters } = useCharacterStore();
 
-  const { isLoading, error, fetchNextPage } = useCharactersDragonBallZ({ page });
+  const { charactersDragonBallZ } = useCharactersDragonBallZ({ page, query });
   
 
   const getMoreCharacter = useCallback(() => {
@@ -20,8 +24,8 @@ const DragonBallZ: React.FC = () => {
       setHasMore(false);
       return;
     } 
-    fetchNextPage();
-  }, [characters, fetchNextPage]);
+    charactersDragonBallZ.fetchNextPage();
+  }, [characters, charactersDragonBallZ]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,14 +40,14 @@ const DragonBallZ: React.FC = () => {
 
   }, [ getMoreCharacter, characters ]);
 
-  const characterAdapter = characters.items.map(createCharacterAdapter) || [];
+  const characterAdapter = query ? filteredCharacters.map(createCharacterAdapter) : characters.items.map(createCharacterAdapter) || [];
   
-  if (error) return <div>Error fetching animes</div>;
+  if (charactersDragonBallZ.error) return <div>Error fetching characters of DBZ</div>;
 
   return (
     <>
       <ContainerCard list={characterAdapter} /> 
-      {(isLoading && hasMore ) && <span className="loading loading-ring loading-lg text-blue-700"></span>}
+      {(charactersDragonBallZ.isLoading && hasMore ) && <span className="loading loading-ring loading-lg text-blue-700"></span>}
       {!hasMore && <h3 className="text-blue-700 font-bold">No hay más personajes para mostrar</h3>}
     </>
 )

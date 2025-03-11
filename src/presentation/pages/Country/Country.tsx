@@ -2,14 +2,21 @@ import { createCountryAdapter } from "../../../infrastructure/adapters/country.a
 import { useCountryStore } from "../../../infrastructure/stores/CountryStore";
 import ContainerCard from "../../components/ContainerCard/ContainerCard"
 import { useCountries } from "../../hooks/useCountries";
+import { useQuerySearch } from "../../hooks/useQuerySearch";
 
 const Country: React.FC = () => {
 
-  const { /* isLoading, */ error } = useCountries();
+  const query = useQuerySearch();
 
-  const { countryList } = useCountryStore();
+  const { allCountries, countriesFiltered } = useCountries({ query });
 
-  const countriesAdapter = countryList.map(createCountryAdapter);
+  const { error } = query ? countriesFiltered : allCountries;
+
+  const { countryList, filteredCountries } = useCountryStore();
+
+  const countries = query ? filteredCountries : countryList;
+
+  const countriesAdapter = countries.map(createCountryAdapter);
  
   if (error) return <div>Error fetching animes</div>;
 

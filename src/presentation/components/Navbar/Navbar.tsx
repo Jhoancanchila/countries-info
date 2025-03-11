@@ -41,6 +41,7 @@ const Navbar: React.FC = () => {
               <ul className="hidden sm:visible min-w-48 sm:justify-around sm:flex" >
                 <li className="hover:text-[#B91C1C]" onClick={()=> handleToggle(ItemMenu.DRAGONBALLZ)}><Link to="/dragon-ball-z">Dragón Ball Z</Link></li>
                 <li className="hover:text-[#B91C1C]" onClick={() => handleToggle(ItemMenu.COUNTRIES)}><Link to="/country">Países</Link></li>
+                <li className="hover:text-[#B91C1C]" onClick={() => handleToggle(ItemMenu.NARUTO)}><Link to="/naruto">Naruto</Link></li>
               </ul>
             )
             :
@@ -73,6 +74,7 @@ const Navbar: React.FC = () => {
             </li>
             <li onClick={()=> handleToggle(ItemMenu.DRAGONBALLZ)}><Link to="/dragon-ball-z">Dragón Ball Z</Link></li>
             <li onClick={() => handleToggle(ItemMenu.COUNTRIES)}><Link to="/country">Países</Link></li>
+            <li onClick={() => handleToggle(ItemMenu.NARUTO)}><Link to="/naruto">Naruto</Link></li>
           </ul>
         </div>
       </div>
