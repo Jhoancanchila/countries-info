@@ -1,10 +1,15 @@
+import { Favorite } from "../../../domain/models/Favorite"
+import { ItemMenu } from "../../../domain/models/ItemsMenu";
 
 interface FavoritiesProps {
-  hasFavorites: boolean
+  favorites: Favorite[]
+  handleToggle: (item: ItemMenu) => void
 }
-const Favorities = ({hasFavorites}: FavoritiesProps) => {
+const FavorityIconNabvar = ({favorites, handleToggle}: FavoritiesProps) => {
+  const hasFavorites = favorites.length > 0;
+  const cuantitiyFavorites = favorites.length > 9 ? "9+" : favorites.length;
   return (
-    <div className="relative">
+    <div className="relative cursor-pointer" onClick={()=>handleToggle((ItemMenu.FAVORITOS))}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`h-8 w-8 ${hasFavorites ? "text-yellow-400 animate-bounce" : "text-gray-500"
@@ -24,11 +29,11 @@ const Favorities = ({hasFavorites}: FavoritiesProps) => {
       {/* Indicador de notificación (punto rojo) */}
       {hasFavorites && (
         <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
-          !
+          {cuantitiyFavorites}
         </span>
       )}
     </div>
   )
 }
 
-export default Favorities
+export default FavorityIconNabvar

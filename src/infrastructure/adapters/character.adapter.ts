@@ -9,6 +9,7 @@ export const createCharacterAdapter = ( character: CharacterItems): CardEntity =
     subPoint: character.maxKi,
     image: character.image,
     threeTitle: character.race,
-    subTitle: character.description
+    subTitle: character.description,
+    category: "Dragon Ball Z"
   };
 }

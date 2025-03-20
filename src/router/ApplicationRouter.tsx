@@ -3,6 +3,7 @@ import Home from "../presentation/pages/Home/Home";
 import DragonBallZ from "../presentation/pages/DragonBallZ/DragonBallZ";
 import Country from "../presentation/pages/Country/Country";
 import NotFound from "../presentation/pages/NotFound/NotFound";
+import Favorites from "../presentation/pages/Favorites/Favorites";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
   {
     path: "/country",
     element: <Country />,
+  },
+  {
+    path: "/favorites",
+    element: <Favorites/>,
   },
   {
     path: "*",

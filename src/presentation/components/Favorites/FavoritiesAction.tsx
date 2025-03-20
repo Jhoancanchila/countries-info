@@ -1,16 +1,31 @@
 
 import { MouseEvent } from "react"
-import "./Favorities.css"
+import "./Favorites.css"
+import { useFavoriteStore } from "../../../infrastructure/stores/FavoriteStore";
 
 interface FavoritiesActionProps {
-  handleFavoritiesItem: (event: MouseEvent<HTMLButtonElement> ) => void
-  isFavorite: boolean
+  itemId: string;
+  itemName: string;
+  category: string;
 }
 
-const FavoritiesAction = ({ handleFavoritiesItem, isFavorite }: FavoritiesActionProps) => {
+const FavoritiesAction = ({ itemId, itemName, category }: FavoritiesActionProps) => {
+
+  const { favorites, addFavorite, removeFavorite } = useFavoriteStore();
+
+  const isFavorite = favorites.some((f) => f.id === itemId);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    if (isFavorite) {
+      removeFavorite(itemId);
+    } else {
+      addFavorite({ id: itemId, name: itemName, category });
+    }
+  };
 
   return (
-    <button onClick={handleFavoritiesItem}>
+    <button onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`h-6 w-6 transition-transform duration-300 ${isFavorite ? "animate-fill-star fill-current text-yellow-400" : "text-gray-500"

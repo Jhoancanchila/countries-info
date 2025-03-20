@@ -18,7 +18,7 @@ const Country: React.FC = () => {
 
   const countriesAdapter = countries.map(createCountryAdapter);
  
-  if (error) return <div>Error fetching animes</div>;
+  if (error) return <div>Error fetching Countries</div>;
 
   return <ContainerCard list={ countriesAdapter } />
 }

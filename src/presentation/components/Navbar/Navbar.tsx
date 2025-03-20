@@ -5,7 +5,8 @@ import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage
 
 import imgNavbar from "../../../assets/anime.webp";
 import { ItemMenu } from "../../../domain/models/ItemsMenu";
-import Favorities from "../Favorities/Favorities";
+import FavorityIconNabvar from "../Favorites/FavorityIconNabvar";
+import { useFavoriteStore } from "../../../infrastructure/stores/FavoriteStore";
 
 
 const Navbar: React.FC = () => {
@@ -13,6 +14,8 @@ const Navbar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const itemContext = useContext(MenuContext);
+
+  const { favorites } = useFavoriteStore();
 
   // Verificar que el contexto no sea undefined
   if (!itemContext) {
@@ -30,14 +33,17 @@ const Navbar: React.FC = () => {
     setSearchParams({ query });
   };
 
-  const hasFavorites = true;
-
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
         <h1 className="text-xl font-bold tracking-wide text-[#B91C1C] mr-4">{itemSelected}</h1>
-        {/* Ícono de favoritos */}
-        <Favorities hasFavorites={hasFavorites} />
+        {
+          favorites.length > 0 && (
+            <Link to="/favorites">
+              <FavorityIconNabvar favorites={favorites} handleToggle={handleToggle}/>
+            </Link>
+          )
+        }
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">

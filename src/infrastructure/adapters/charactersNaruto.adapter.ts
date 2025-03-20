@@ -9,6 +9,7 @@ export const createCharacterNarutoAdapter = ( character: Character): CardEntity 
     subPoint: character.id,
     image: character.images[0],
     threeTitle: character.name,
-    subTitle: character.debut?.novel
+    subTitle: character.debut?.novel,
+    category: "Naruto"
   };
 }

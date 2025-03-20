@@ -7,6 +7,7 @@ import Country from './presentation/pages/Country/Country';
 import NotFound from './presentation/pages/NotFound/NotFound';
 import { MenuProvider } from './infrastructure/context/menuContext/MenuProvider';
 import Naruto from './presentation/pages/Naruto/Naruto';
+import Favorites from './presentation/pages/Favorites/Favorites';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/dragon-ball-z" element={<DragonBallZ />} />
             <Route path="/country" element={<Country />} />
             <Route path="/naruto" element={<Naruto />} />
+            <Route path="/favorites" element={<Favorites />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

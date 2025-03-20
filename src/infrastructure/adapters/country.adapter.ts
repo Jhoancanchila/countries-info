@@ -7,5 +7,6 @@ export const createCountryAdapter = (country: any):CardEntity => ({
   threeTitle: country.region,
   point: country.population,
   subPoint: country.area,
-  image: country.flags.png
+  image: country.flags.png,
+  category:"Países"
 })

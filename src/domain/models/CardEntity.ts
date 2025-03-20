@@ -6,4 +6,5 @@ export interface CardEntity {
   point: string | number;
   subPoint: string | number;
   image: string;
+  category?: string;
 }
