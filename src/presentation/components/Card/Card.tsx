@@ -1,9 +1,10 @@
-import { FC } from "react"
+import { FC, MouseEvent, useState } from "react"
 import { CardEntity } from "../../../domain/models/CardEntity"
 import { useModalStore } from "../../../infrastructure/stores/ModalStore";
 import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage";
 import { ModalContent } from "../../../domain/models/ModalContent";
 import { useLazyImages } from "../../hooks/useLazyImages";
+import FavoritiesAction from "../Favorities/FavoritiesAction";
 
 interface CardProps {
   character: CardEntity
@@ -12,6 +13,8 @@ interface CardProps {
 const Card: FC<CardProps> = ({ character }) => {
   
   const { title, subTitle, threeTitle, point, subPoint, image } = character;
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   
   const { isVisible, cardRef } = useLazyImages();
 
@@ -19,13 +22,23 @@ const Card: FC<CardProps> = ({ character }) => {
 
   const itemSelected = getItemSelectedMenu() as ModalContent;
 
+  const handleCardClick = () => {
+    if (itemSelected) {
+      openModal(itemSelected, character);
+    }
+  };
+
+  const handleFavoriteClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation(); 
+    setIsFavorite(!isFavorite);
+  };
 
 
   return (
     <div 
       ref={ cardRef }
       className="animate-fadeIn card card-compact bg-base-100 shadow-xl pt-4 cursor-pointer"
-      onClick={() => itemSelected && openModal(itemSelected, character)}
+      onClick={handleCardClick}
     >
       {
         !isVisible ? (
@@ -43,7 +56,10 @@ const Card: FC<CardProps> = ({ character }) => {
         </figure>
       }
       <div className="card-body">
-        <h2 className="card-title">{ title }</h2>
+        <div className="flex">
+          <h2 className="card-title mr-2">{ title }</h2> 
+          <FavoritiesAction handleFavoritiesItem={handleFavoriteClick} isFavorite={isFavorite}/>
+        </div>
         <h2 className="text-left line-clamp-2">{ subTitle }</h2>
         <h4 className="text-left">{ threeTitle }</h4>
         <div className="badge badge-secondary">{ point }</div>
