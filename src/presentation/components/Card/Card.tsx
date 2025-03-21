@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, memo } from "react"
 import { CardEntity } from "../../../domain/models/CardEntity"
 import { useModalStore } from "../../../infrastructure/stores/ModalStore";
 import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage";
@@ -10,7 +10,7 @@ interface CardProps {
   character: CardEntity
 }
 
-const Card: FC<CardProps> = ({ character }) => {
+const Card: FC<CardProps> = memo(({ character }) => {
   
   const { title, subTitle, threeTitle, point, subPoint, image } = character;
   
@@ -50,11 +50,7 @@ const Card: FC<CardProps> = ({ character }) => {
       <div className="card-body">
         <div className="flex">
           <h2 className="card-title mr-2">{ title }</h2> 
-          <FavoritiesAction 
-            itemId={String(character.id ?? '')} 
-            itemName={character.title ?? 'Unknown'} 
-            category={character.category ?? 'Uncategorized'} 
-          />
+          <FavoritiesAction {...character} />
         </div>
         <h2 className="text-left line-clamp-2">{ subTitle }</h2>
         <h4 className="text-left">{ threeTitle }</h4>
@@ -63,6 +59,6 @@ const Card: FC<CardProps> = ({ character }) => {
       </div>
     </div>
   )
-}
+})
 
 export default Card

@@ -1,7 +1,7 @@
-import { Favorite } from "../models/Favorite";
+import { CardEntity } from "../models/CardEntity";
 
 export default interface FavoriteRepository {
-  add(favorite: Favorite): void;
-  remove(favorite: Favorite): void;
-  getAll(): Favorite[];
+  add(favorite: CardEntity): void;
+  remove(favorite: CardEntity): void;
+  getAll(): CardEntity[];
 }

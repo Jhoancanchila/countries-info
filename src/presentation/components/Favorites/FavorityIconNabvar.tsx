@@ -1,15 +1,15 @@
-import { Favorite } from "../../../domain/models/Favorite"
+import { CardEntity } from "../../../domain/models/CardEntity";
 import { ItemMenu } from "../../../domain/models/ItemsMenu";
 
 interface FavoritiesProps {
-  favorites: Favorite[]
+  favorites: CardEntity[]
   handleToggle: (item: ItemMenu) => void
 }
 const FavorityIconNabvar = ({favorites, handleToggle}: FavoritiesProps) => {
-  const hasFavorites = favorites.length > 0;
+  const hasFavorites: boolean = favorites.length > 0;
   const cuantitiyFavorites = favorites.length > 9 ? "9+" : favorites.length;
   return (
-    <div className="relative cursor-pointer" onClick={()=>handleToggle((ItemMenu.FAVORITOS))}>
+    <div className="relative cursor-pointer" onClick={()=>handleToggle((ItemMenu.FAVORITOS))}> 
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`h-8 w-8 ${hasFavorites ? "text-yellow-400 animate-bounce" : "text-gray-500"
@@ -28,8 +28,8 @@ const FavorityIconNabvar = ({favorites, handleToggle}: FavoritiesProps) => {
 
       {/* Indicador de notificación (punto rojo) */}
       {hasFavorites && (
-        <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
-          {cuantitiyFavorites}
+        <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-[#B91C1C] text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+          { cuantitiyFavorites }
         </span>
       )}
     </div>

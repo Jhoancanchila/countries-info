@@ -1,28 +1,26 @@
 
-import { MouseEvent } from "react"
+import { MouseEvent, memo, useCallback, useMemo } from "react"
 import "./Favorites.css"
-import { useFavoriteStore } from "../../../infrastructure/stores/FavoriteStore";
+import { useAddFavorite, useFavorites, useRemoveFavorite } from "../../../infrastructure/stores/FavoriteStore";
+import { CardEntity } from "../../../domain/models/CardEntity";
 
-interface FavoritiesActionProps {
-  itemId: string;
-  itemName: string;
-  category: string;
-}
+const FavoritiesAction = memo(({ id,image, point,subPoint,threeTitle,title,category,subTitle }: CardEntity) => {
 
-const FavoritiesAction = ({ itemId, itemName, category }: FavoritiesActionProps) => {
+  const favorites = useFavorites();
+  const addFavorite = useAddFavorite();
+  const removeFavorite = useRemoveFavorite();
+  console.log("🚀 ~ FavoritiesAction ~ favorites:", favorites)
 
-  const { favorites, addFavorite, removeFavorite } = useFavoriteStore();
+  const isFavorite = useMemo(() => favorites.some((f) => f.id === id), [favorites, id]);
 
-  const isFavorite = favorites.some((f) => f.id === itemId);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     if (isFavorite) {
-      removeFavorite(itemId);
+      removeFavorite(id);
     } else {
-      addFavorite({ id: itemId, name: itemName, category });
+      addFavorite({ id,image, point,subPoint,threeTitle,title,category,subTitle });
     }
-  };
+  }, [id, image, point, subPoint, threeTitle, title, category, subTitle, isFavorite, addFavorite, removeFavorite]);
 
   return (
     <button onClick={handleClick}>
@@ -43,6 +41,6 @@ const FavoritiesAction = ({ itemId, itemName, category }: FavoritiesActionProps)
       </svg>
     </button>
   )
-}
+})
 
 export default FavoritiesAction

@@ -1,10 +1,10 @@
-import { Favorite } from "../models/Favorite";
+import { CardEntity } from "../models/CardEntity";
 import FavoriteRepository from "../repositories/FavoriteRepository";
 
 export class AddFavorite {
   constructor(private repository: FavoriteRepository) {}
 
-  execute(favorite: Favorite): void {
+  execute(favorite: CardEntity): void {
     this.repository.add(favorite);
   }
 }
@@ -12,7 +12,7 @@ export class AddFavorite {
 export class RemoveFavorite {
   constructor(private repository: FavoriteRepository) {}
 
-  execute(favorite: Favorite): void {
+  execute(favorite: CardEntity): void {
     this.repository.remove(favorite);
   }
 }
@@ -20,7 +20,7 @@ export class RemoveFavorite {
 export class GetFavorites {
   constructor(private repository: FavoriteRepository) {}
 
-  execute(): Favorite[] {
+  execute(): CardEntity[] {
     return this.repository.getAll();
   }
 }

@@ -6,7 +6,7 @@ import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage
 import imgNavbar from "../../../assets/anime.webp";
 import { ItemMenu } from "../../../domain/models/ItemsMenu";
 import FavorityIconNabvar from "../Favorites/FavorityIconNabvar";
-import { useFavoriteStore } from "../../../infrastructure/stores/FavoriteStore";
+import { useFavorites } from "../../../infrastructure/stores/FavoriteStore";
 
 
 const Navbar: React.FC = () => {
@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
 
   const itemContext = useContext(MenuContext);
 
-  const { favorites } = useFavoriteStore();
+  const favorites = useFavorites();
 
   // Verificar que el contexto no sea undefined
   if (!itemContext) {
