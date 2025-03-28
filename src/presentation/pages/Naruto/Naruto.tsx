@@ -4,14 +4,16 @@ import { useNarutoStore } from '../../../infrastructure/stores/NarutoStore';
 import { useCharactersDragonBallZ } from '../../hooks/useCharactersDragonBallZ';
 import ContainerCard from '../../components/ContainerCard/ContainerCard';
 import { createCharacterNarutoAdapter } from '../../../infrastructure/adapters/charactersNaruto.adapter';
+import { useQuerySearch } from "../../hooks/useQuerySearch";
 
 const Naruto: FC = () => {
 
   const [ hasMore, setHasMore ] = useState(true);
 
   const page = pageInitial;
+  const query = useQuerySearch();
   const { charactersNaruto } = useNarutoStore();
-  const { charactersNarut } = useCharactersDragonBallZ({ page });
+  const { charactersNarut } = useCharactersDragonBallZ({ page, query });
 
   const getMoreCharacter = useCallback(() => {
     const totalPages = Math.ceil(charactersNaruto?.totalCharacters / charactersNaruto?.pageSize);

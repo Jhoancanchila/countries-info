@@ -18,7 +18,7 @@ beforeAll(() => {
     }
 
     unobserve(target: Element): void {
-      // No hace nada en la simulación
+      this.callback([{ isIntersecting: false, target, intersectionRatio: 0, boundingClientRect: {} as DOMRectReadOnly, intersectionRect: {} as DOMRectReadOnly, rootBounds: null, time: 0 }], this);
     }
 
     disconnect(): void {

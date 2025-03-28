@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import MenuContext from "../../../infrastructure/context/menuContext/MenuContext";
 import { Link, useSearchParams } from "react-router-dom";
 import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage";
@@ -7,11 +7,15 @@ import imgNavbar from "../../../assets/anime.webp";
 import { ItemMenu } from "../../../domain/models/ItemsMenu";
 import FavorityIconNabvar from "../Favorites/FavorityIconNabvar";
 import { useFavorites } from "../../../infrastructure/stores/FavoriteStore";
+import InputSearch from "../InputSearch/InputSearch";
+import useWindowWidth from "../../hooks/useWindowsWidth";
 
 
 const Navbar: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
 
   const itemContext = useContext(MenuContext);
 
@@ -33,35 +37,47 @@ const Navbar: React.FC = () => {
     setSearchParams({ query });
   };
 
+  const windowsWidth = useWindowWidth();
+
+  useEffect(() => {
+    if (windowsWidth > 480) {
+      setIsExpanded(false);
+    }
+  }, [windowsWidth]);
+
+  const favoritesExist: boolean = favorites.length > 0;
+
   return (
-    <div className="navbar bg-base-100">
-      <div className="flex-1">
-        <h1 className="text-xl font-bold tracking-wide text-[#B91C1C] mr-4">{itemSelected}</h1>
+    <div className="navbar bg-base-100 justify-end">
+      {
+      <div className={`${isExpanded ? 'hidden' : ''} flex-1`}>
+        <h1 className={`text-xl font-bold tracking-wide text-[#B91C1C] mr-4`}>{itemSelected}</h1>
         {
-          favorites.length > 0 && (
+          !!favoritesExist && (
             <Link to="/favorites">
               <FavorityIconNabvar favorites={favorites} handleToggle={handleToggle}/>
             </Link>
           )
         }
-      </div>
+      </div>        
+      }
       <div className="flex-none gap-2">
         <div className="form-control">
           {
             itemSelected === "Ánimes" ? (
-              <ul className="hidden sm:visible min-w-48 sm:justify-around sm:flex" >
+              <ul className="hidden sm:visible min-w-80 sm:justify-around sm:flex" >
                 <li className="hover:text-[#B91C1C]" onClick={()=> handleToggle(ItemMenu.DRAGONBALLZ)}><Link to="/dragon-ball-z">Dragón Ball Z</Link></li>
                 <li className="hover:text-[#B91C1C]" onClick={() => handleToggle(ItemMenu.COUNTRIES)}><Link to="/country">Países</Link></li>
                 <li className="hover:text-[#B91C1C]" onClick={() => handleToggle(ItemMenu.NARUTO)}><Link to="/naruto">Naruto</Link></li>
+                <li className={`${favoritesExist ? '' : 'hidden'} hover:text-[#B91C1C]`} onClick={() => handleToggle(ItemMenu.FAVORITOS)}><Link to="/favorites">Favoritos</Link></li>
               </ul>
             )
             :
             (
-              <input 
-                type="text" 
-                placeholder="Search" 
-                className="input input-bordered w-24 md:w-auto" 
-                onChange={(e) => handleSearch(e.target.value)}
+              <InputSearch
+                isExpanded={isExpanded}
+                setIsExpanded={setIsExpanded}
+                handleChange={handleSearch}
                 value={searchParams.get("query") || ""}
               />
             )
@@ -86,6 +102,7 @@ const Navbar: React.FC = () => {
             <li onClick={()=> handleToggle(ItemMenu.DRAGONBALLZ)}><Link to="/dragon-ball-z">Dragón Ball Z</Link></li>
             <li onClick={() => handleToggle(ItemMenu.COUNTRIES)}><Link to="/country">Países</Link></li>
             <li onClick={() => handleToggle(ItemMenu.NARUTO)}><Link to="/naruto">Naruto</Link></li>
+            <li className={`${!favoritesExist ? 'hidden' : ''}`} onClick={() => handleToggle(ItemMenu.FAVORITOS)}><Link to="/favorites">Favoritos</Link></li>
           </ul>
         </div>
       </div>

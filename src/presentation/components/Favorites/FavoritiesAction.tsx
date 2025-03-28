@@ -9,7 +9,6 @@ const FavoritiesAction = memo(({ id,image, point,subPoint,threeTitle,title,categ
   const favorites = useFavorites();
   const addFavorite = useAddFavorite();
   const removeFavorite = useRemoveFavorite();
-  console.log("🚀 ~ FavoritiesAction ~ favorites:", favorites)
 
   const isFavorite = useMemo(() => favorites.some((f) => f.id === id), [favorites, id]);
 
