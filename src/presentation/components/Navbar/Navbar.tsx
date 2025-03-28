@@ -3,12 +3,13 @@ import MenuContext from "../../../infrastructure/context/menuContext/MenuContext
 import { Link, useSearchParams } from "react-router-dom";
 import { getItemSelectedMenu } from "../../../utilities/localStorage/menuStorage";
 
-import imgNavbar from "../../../assets/anime.webp";
 import { ItemMenu } from "../../../domain/models/ItemsMenu";
 import FavorityIconNabvar from "../Favorites/FavorityIconNabvar";
 import { useFavorites } from "../../../infrastructure/stores/FavoriteStore";
 import InputSearch from "../InputSearch/InputSearch";
 import useWindowWidth from "../../hooks/useWindowsWidth";
+
+import { useRandomImageProfile } from "../../hooks/useRandomImageProfile";
 
 
 const Navbar: React.FC = () => {
@@ -16,36 +17,39 @@ const Navbar: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-
+  
+  
   const itemContext = useContext(MenuContext);
-
+  
   const favorites = useFavorites();
-
+  
   // Verificar que el contexto no sea undefined
   if (!itemContext) {
     throw new Error("ThemeContext must be used within a ThemeProvider");
   }
-
+  
   const { toggleItem } = itemContext;
   const itemSelected = getItemSelectedMenu();
-
+  
   const handleToggle = (item: ItemMenu) => {
     toggleItem(item);
   };
-
+  
   const handleSearch = (query: string) => {
     setSearchParams({ query });
   };
-
+  
   const windowsWidth = useWindowWidth();
-
+  
   useEffect(() => {
     if (windowsWidth > 480) {
       setIsExpanded(false);
     }
   }, [windowsWidth]);
-
+  
   const favoritesExist: boolean = favorites.length > 0;
+  
+  const { currentImage } = useRandomImageProfile({ itemSelected: itemSelected || ItemMenu.ANIMES});
 
   return (
     <div className="navbar bg-base-100 justify-end">
@@ -87,8 +91,9 @@ const Navbar: React.FC = () => {
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar hover:bg-[#B91C1C]">
             <div className="w-10 rounded-full">
               <img
+                className="cover"
                 alt="logo navbar"
-                src={imgNavbar} />
+                src={currentImage} />
             </div>
           </div>
           <ul
