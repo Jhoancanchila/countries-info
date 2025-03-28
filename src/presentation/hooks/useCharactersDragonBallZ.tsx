@@ -39,9 +39,9 @@ export const useCharactersDragonBallZ = ( { page, query }: Props ) => {
   
   const fetchCharactersFiltered = async () => {
     let charactersFiltered: CharacterItems[] = [];
-    const characterExist = characters.items.find((character) => character.name.toLowerCase().includes(query.toLowerCase()));
+    const characterExist = characters.items.find((character) => character.name.toLowerCase().includes(query.toLowerCase().trim()));
     if(characterExist){
-      charactersFiltered = characters.items.filter((character) => character.name.toLowerCase().includes(query.toLowerCase()));
+      charactersFiltered = characters.items.filter((character) => character.name.toLowerCase().includes(query.toLowerCase().trim()));
       setFilteredCharacters(charactersFiltered);
     }else{
       charactersFiltered = await getCharacterFiltered(characterRepository, query);
