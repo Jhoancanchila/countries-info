@@ -15,7 +15,7 @@ const ContainerCard: React.FC<Props> = ({ list }) => {
   const memoizedList = useMemo(() => list, [list]);
 
   return (
-    <div className={`grid gap-4 mt-6 ${
+    <div className={`grid gap-4 mt-6 dark:bg-dark-color-primary transition-colors duration-500 ${
       memoizedList.length === 1
         ? "grid-cols-[minmax(300px,400px)] justify-center" // Ajusta el ancho al contenido
         : "grid-cols-[repeat(auto-fit,minmax(300px,1fr))]" // Configuración normal para múltiples elementos

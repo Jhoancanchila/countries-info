@@ -29,7 +29,7 @@ const Card: FC<CardProps> = memo(({ character }) => {
   return (
     <div 
       ref={ cardRef }
-      className="animate-fadeIn card card-compact bg-base-100 shadow-xl pt-4 cursor-pointer"
+      className="dark:bg-dark-color-secondary transition-colors duration-500 animate-fadeIn card card-compact bg-base-100 shadow-xl pt-4 cursor-pointer"
       onClick={handleCardClick}
     >
       {
@@ -47,7 +47,7 @@ const Card: FC<CardProps> = memo(({ character }) => {
           />
         </figure>
       }
-      <div className="card-body">
+      <div className="card-body dark:text-white transition-colors duration-500">
         <div className="flex">
           <h2 className="card-title mr-2">{ title }</h2> 
           <FavoritiesAction {...character} />

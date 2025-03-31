@@ -10,6 +10,7 @@ import InputSearch from "../InputSearch/InputSearch";
 import useWindowWidth from "../../hooks/useWindowsWidth";
 
 import { useRandomImageProfile } from "../../hooks/useRandomImageProfile";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 
 const Navbar: React.FC = () => {
@@ -52,7 +53,7 @@ const Navbar: React.FC = () => {
   const { currentImage } = useRandomImageProfile({ itemSelected: itemSelected || ItemMenu.ANIMES});
 
   return (
-    <div className="navbar bg-base-100 justify-end">
+    <div className="navbar bg-base-100 justify-end dark:bg-dark-color-secondary transition-colors duration-500 ">
       {
       <div className={`${isExpanded ? 'hidden' : ''} flex-1`}>
         <h1 className={`text-xl font-bold tracking-wide text-[#B91C1C] mr-4`}>{itemSelected}</h1>
@@ -66,10 +67,11 @@ const Navbar: React.FC = () => {
       </div>        
       }
       <div className="flex-none gap-2">
+        <ThemeToggle />
         <div className="form-control">
           {
             itemSelected === "Ánimes" ? (
-              <ul className="hidden sm:visible min-w-80 sm:justify-around sm:flex" >
+              <ul className="hidden sm:visible min-w-80 sm:justify-around sm:flex dark:text-white transition-colors duration-500" >
                 <li className="hover:text-[#B91C1C]" onClick={()=> handleToggle(ItemMenu.DRAGONBALLZ)}><Link to="/dragon-ball-z">Dragón Ball Z</Link></li>
                 <li className="hover:text-[#B91C1C]" onClick={() => handleToggle(ItemMenu.COUNTRIES)}><Link to="/country">Países</Link></li>
                 <li className="hover:text-[#B91C1C]" onClick={() => handleToggle(ItemMenu.NARUTO)}><Link to="/naruto">Naruto</Link></li>
@@ -98,7 +100,7 @@ const Navbar: React.FC = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow ">
             <li onClick={()=> handleToggle(ItemMenu.ANIMES)}>
               <Link to="/" className="justify-between">
                 Home
