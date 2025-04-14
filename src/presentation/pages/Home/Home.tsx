@@ -1,4 +1,20 @@
+import { useContext, useEffect } from "react"
+import MenuContext from "../../../infrastructure/context/menuContext/MenuContext";
+import { ItemMenu } from "../../../domain/models/ItemsMenu";
+
 const Home: React.FC = () => {
+  const itemContext = useContext(MenuContext);
+    
+  // Verificar que el contexto no sea undefined
+  if (!itemContext) {
+    throw new Error("ThemeContext must be used within a ThemeProvider");
+  }
+  
+  const { toggleItem } = itemContext;
+  useEffect(() => {
+    toggleItem(ItemMenu.ANIMES);
+  }, [ toggleItem ]);
+  
   return (
     <section className="bg-white dark:bg-dark-color-secondary transition-colors duration-500" >
       <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
