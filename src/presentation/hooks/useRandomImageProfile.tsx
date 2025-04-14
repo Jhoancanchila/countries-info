@@ -24,7 +24,7 @@ export const useRandomImageProfile = ({ itemSelected }: Props) => {
       case ItemMenu.COUNTRIES: {
         if (!countryList?.length) return defaultImage;
         const randomCountry = countryList[ramdonNumber(countryList.length - 1)];
-        return randomCountry?.flags.png || defaultImage;
+        return randomCountry?.flags?.png ? randomCountry?.flags?.png : defaultImage;
       }
       case ItemMenu.DRAGONBALLZ: {
         if (!characters?.items?.length) return defaultImage;
