@@ -5,6 +5,7 @@ import { useCharactersDragonBallZ } from '../../hooks/useCharactersDragonBallZ';
 import ContainerCard from '../../components/ContainerCard/ContainerCard';
 import { createCharacterNarutoAdapter } from '../../../infrastructure/adapters/charactersNaruto.adapter';
 import { useQuerySearch } from "../../hooks/useQuerySearch";
+import ErrorFetching from '../../components/Error/ErrorFetching';
 
 const Naruto: FC = () => {
 
@@ -39,7 +40,7 @@ const Naruto: FC = () => {
 
     const characterAdapter = charactersNaruto.characters?.map(createCharacterNarutoAdapter) || [];
       
-    if (charactersNarut.error) return <div>Error fetching animes</div>;
+    if (charactersNarut.error) return <ErrorFetching message="Error fetching animes" />;
 
   return (
     <>

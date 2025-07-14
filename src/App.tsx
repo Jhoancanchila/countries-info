@@ -13,11 +13,12 @@ import { ThemeProvider } from './infrastructure/context/themeProvider/themeProvi
 function App() {
 
   return (
-    <>
-      <ThemeProvider defaultTheme="light" storageKey="theme-preference">
+    <ThemeProvider defaultTheme="light" storageKey="theme-preference">
+      <div className="min-h-screen bg-white dark:bg-dark-color-primary transition-colors duration-500">
         <MenuProvider>
           <Router>
           <Navbar />
+          <div className="px-4 pb-8 max-w-7xl mx-auto">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/dragon-ball-z" element={<DragonBallZ />} />
@@ -26,10 +27,11 @@ function App() {
               <Route path="/favorites" element={<Favorites />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+          </div>
           </Router>
         </MenuProvider>
-      </ThemeProvider>
-    </>
+      </div>
+    </ThemeProvider>
   )
 }
 

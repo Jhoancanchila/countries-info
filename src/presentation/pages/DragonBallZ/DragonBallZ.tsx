@@ -5,6 +5,7 @@ import ContainerCard from "../../components/ContainerCard/ContainerCard"
 import { useCharactersDragonBallZ } from "../../hooks/useCharactersDragonBallZ";
 import { pageInitial } from "../../../domain/models/General";
 import { useQuerySearch } from "../../hooks/useQuerySearch";
+import ErrorFetching from "../../components/Error/ErrorFetching";
 
 
 const DragonBallZ: React.FC = () => {
@@ -42,7 +43,7 @@ const DragonBallZ: React.FC = () => {
 
   const characterAdapter = query ? filteredCharacters.map(createCharacterAdapter) : characters.items.map(createCharacterAdapter) || [];
   
-  if (charactersDragonBallZ.error) return <div>Error fetching characters of DBZ</div>;
+  if (charactersDragonBallZ.error) return <ErrorFetching message="Error fetching characters of DBZ" />;
 
   return (
     <>

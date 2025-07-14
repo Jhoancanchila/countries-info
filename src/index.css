@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Estilos base para asegurar que el dark mode cubra toda la página */
+html {
+  min-height: 100%;
+  background-color: white;
+}
+
+html.dark {
+  background-color: #11182B; /* dark-color-primary */
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+}
