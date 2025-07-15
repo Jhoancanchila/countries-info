@@ -3,7 +3,7 @@ import { Country } from "../../domain/models/Country";
 const BASE_URL = "https://restcountries.com/v3.1";
 
 export const fetchCountryList = async (): Promise<Country[]> => {
-  const URL_BASE = `${BASE_URL}/all`;
+  const URL_BASE = `${BASE_URL}/independent`;
   const response = await fetch(`${URL_BASE}`);
   if(!response.ok) {
     throw new Error("Failed to fetch countries");
