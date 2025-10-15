@@ -1,12 +1,13 @@
 import type React from "react"
-
 import { useContext, useState, useEffect } from "react"
-import ThemeContext from "./themeContext";
+import ThemeContext from "./themeContext"
+
+type Theme = "light" | "dark" | "system"
 
 interface ThemeProviderProps {
-  children: React.ReactNode;
-  defaultTheme?: string;
-  storageKey?: string;
+  children: React.ReactNode
+  defaultTheme?: Theme
+  storageKey?: string
 }
 
 export const ThemeProvider = ({
@@ -14,25 +15,53 @@ export const ThemeProvider = ({
   defaultTheme = "system",
   storageKey = "vite-ui-theme",
 }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState(defaultTheme)
+  // Inicializar el tema desde localStorage o usar el default
+  const [theme, setTheme] = useState<Theme>(() => {
+    const storedTheme = localStorage.getItem(storageKey) as Theme | null
+    return storedTheme || defaultTheme
+  })
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem(storageKey)
-    setTheme(storedTheme || defaultTheme)
-  }, [defaultTheme, storageKey])
+    const root = document.documentElement
+    
+    // Determinar el tema real a aplicar
+    const applyTheme = (currentTheme: Theme) => {
+      root.classList.remove("light", "dark")
+      
+      if (currentTheme === "system") {
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light"
+        root.classList.add(systemTheme)
+      } else {
+        root.classList.add(currentTheme)
+      }
+    }
 
-  useEffect(() => {
+    applyTheme(theme)
     localStorage.setItem(storageKey, theme)
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
+
+    // Escuchar cambios en las preferencias del sistema
+    if (theme === "system") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      const handleChange = () => applyTheme("system")
+      
+      mediaQuery.addEventListener("change", handleChange)
+      return () => mediaQuery.removeEventListener("change", handleChange)
     }
   }, [theme, storageKey])
 
-  console.log(theme)
-
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  )
 }
 
-export const useTheme = () => useContext(ThemeContext)
+export const useTheme = () => {
+  const context = useContext(ThemeContext)
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider")
+  }
+  return context
+}

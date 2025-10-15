@@ -13,7 +13,7 @@ import { ThemeProvider } from './infrastructure/context/themeProvider/themeProvi
 function App() {
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="theme-preference">
+    <ThemeProvider defaultTheme="system" storageKey="theme-preference">
       <div className="min-h-screen bg-white dark:bg-dark-color-primary transition-colors duration-500">
         <MenuProvider>
           <Router>
