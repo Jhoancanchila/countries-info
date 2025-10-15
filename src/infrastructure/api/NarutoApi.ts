@@ -1,7 +1,7 @@
 import { Character } from "../../domain/models/Character";
 import { Naruto } from "../../domain/models/Naruto";
 
-const BASE_URL = "https://narutodb.xyz/api/character";
+const BASE_URL = import.meta.env.VITE_API_URL_NARUTO;
 
 export const fetchNarutoList = async (page: number = 1): Promise<Naruto> => {
   const response = await fetch(`${BASE_URL}?page=${page}&limit=10`);

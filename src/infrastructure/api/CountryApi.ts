@@ -1,6 +1,6 @@
 import { Country } from "../../domain/models/Country";
 
-const BASE_URL = "https://restcountries.com/v3.1";
+const BASE_URL = import.meta.env.VITE_API_URL_COUNTRIES;
 
 export const fetchCountryList = async (): Promise<Country[]> => {
   const URL_BASE = `${BASE_URL}/independent`;

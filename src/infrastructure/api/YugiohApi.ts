@@ -2,7 +2,7 @@ import { Yugioh } from "../../domain/models/YuGiOh";
 
 export const fetchYugiOhList = async (): Promise<Yugioh[]> => {
   try {
-    const response = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php`);
+    const response = await fetch(import.meta.env.VITE_API_URL_YUGIOH);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

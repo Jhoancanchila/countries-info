@@ -1,5 +1,5 @@
 import { Character, CharacterItems } from "../../domain/models/Character";
-const BASE_URL = "https://dragonball-api.com/api/characters";
+const BASE_URL = import.meta.env.VITE_API_URL_DBZ;
 
 export const fetchCharacterList = async (page: number = 1):Promise<Character> => {
     const PARAMS = `?page=${page}&limit=10`;
