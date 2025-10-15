@@ -23,7 +23,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/dragon-ball-z" element={<DragonBallZ />} />
               <Route path="/country" element={<Country />} />
-              <Route path="/naruto" element={<Naruto />} />
+              <Route path="/yugioh" element={<Naruto />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
