@@ -3,7 +3,8 @@ export enum ItemMenu {
   DRAGONBALLZ = "Dragón Ball Z",
   COUNTRIES = "Países",
   NARUTO = "Naruto",
-  FAVORITOS = "Favoritos"
+  FAVORITOS = "Favoritos",
+  YUGIOH = "Yugioh",
 }
 
 

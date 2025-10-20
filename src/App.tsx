@@ -13,7 +13,7 @@ import { ThemeProvider } from './infrastructure/context/themeProvider/themeProvi
 function App() {
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="theme-preference">
+    <ThemeProvider defaultTheme="system" storageKey="theme-preference">
       <div className="min-h-screen bg-white dark:bg-dark-color-primary transition-colors duration-500">
         <MenuProvider>
           <Router>
@@ -23,7 +23,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/dragon-ball-z" element={<DragonBallZ />} />
               <Route path="/country" element={<Country />} />
-              <Route path="/naruto" element={<Naruto />} />
+              <Route path="/yugioh" element={<Naruto />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
